@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lean.spring.cloud.alibaba</groupId>
+    <artifactId>spring-cloud-alibaba</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>spring-cloud-parent</name>
+    <description>spring cloud alibaba 组建学习</description>
+    <modules>
+        <module>service-provider</module>
+    </modules>
+
+    <properties>
+        <!--    插件    -->
+        <docker.plugin.version>1.2.0</docker.plugin.version>
+        <docker.image.prefix>learn</docker.image.prefix>
+        <maven.resources.plugin>3.1.0</maven.resources.plugin>
+        <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
+        <spring-boot-maven-plugin>2.1.3.RELEASE</spring-boot-maven-plugin>
+
+
+        <!--ip地址-->
+        <intranet-ip>192.168.0.4</intranet-ip>
+        <extranet-ip>106.13.162.44</extranet-ip>
+        <local-ip>127.0.0.1</local-ip>
+
+
+        <!--ip地址，前面带有@用于安全认证的时候-->
+        <intranet-ip-at>@192.168.0.4</intranet-ip-at>
+        <extranet-ip-at>@106.13.162.44</extranet-ip-at>
+        <local-ip-at>@127.0.0.1</local-ip-at>
+
+        <!--   依赖   -->
+        <spring-cloud-version>Greenwich.SR4</spring-cloud-version>
+        <spring-boot-version>2.1.3.RELEASE</spring-boot-version>
+        <spring-cloud-starter-alibaba-version>0.9.0.RELEASE</spring-cloud-starter-alibaba-version>
+
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot-version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba</artifactId>
+                <version>${spring-cloud-starter-alibaba-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <!--重要 如果不设置resource 会导致application.yaml中的@@找不到pom文件中的配置-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <!--重要 如果不设置resource 会导致application.yaml中的@@找不到pom文件中的配置-->
+
+        <pluginManagement>
+
+            <plugins>
+                <!--docker插件，需要具体到项目 -->
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!--生成的镜像名成-->
+                        <imageName>${project.artifactId}</imageName>
+                        <imageTags>
+                            <!--                            <imageTag>${project.version}</imageTag>-->
+                            <imageTag>latest</imageTag>
+                        </imageTags>
+                        <!--dockerfile目录-->
+                        <dockerDirectory>${project.basedir}</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <!--
+                        此插件只有含有main方法入口的web程序应该包含此插件，
+                        否则依赖的common没有main入口，无法编译
+                     -->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includeSystemScope>true</includeSystemScope>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <version>${maven.compiler.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin}</version>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
