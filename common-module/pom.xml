@@ -11,6 +11,7 @@
     <name>common-module</name>
     <description>学习</description>
     <artifactId>common-module</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
 
