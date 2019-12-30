@@ -1,6 +1,9 @@
 package com.learn.cloud.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSONObject;
+import com.learn.cloud.common.response.ApiResult;
+import com.learn.cloud.common.util.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -37,8 +40,15 @@ public class HelloController {
 		return this.hello;
 	}
 	
+	/**
+	 * 特别地，若 blockHandler 和 fallback 都进行了配置，
+	 * 则被限流降级而抛出 BlockException 时只会进入 blockHandler 处理逻辑。
+	 * 若未配置 blockHandler、fallback 和 defaultFallback，
+	 * 则被限流降级时会将 BlockException 直接抛出
+	 */
 	@GetMapping("/client")
-	public List<JSONObject>  getClient(){
+	@SentinelResource(value = "/client", blockHandlerClass= ExceptionUtil.class, blockHandler="handleException", fallback ="handleException" )
+	public ApiResult getClient(){
 		log.debug("获取注册表中的注册信息");
 		
 		JSONObject server = new JSONObject();
@@ -59,6 +69,6 @@ public class HelloController {
 			result.add(server);
 		});
 		
-		return result ;
+		return ApiResult.success(result);
 	}
 }

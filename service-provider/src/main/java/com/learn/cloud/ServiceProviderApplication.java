@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @description 启动类
  * @date 2019/12/20 5:27 下午
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.learn.cloud.*")
 public class ServiceProviderApplication {
 	
 	public static void main(String[] args) {
