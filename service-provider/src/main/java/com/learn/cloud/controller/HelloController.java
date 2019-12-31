@@ -47,7 +47,7 @@ public class HelloController {
 	 * 则被限流降级时会将 BlockException 直接抛出
 	 */
 	@GetMapping("/client")
-	@SentinelResource(value = "/client", blockHandlerClass= ExceptionUtil.class, blockHandler="handleException", fallback ="handleException" )
+	@SentinelResource(value = "/client", blockHandlerClass= {ExceptionUtil.class}, blockHandler="handleException", fallback ="handleException" )
 	public ApiResult getClient(){
 		log.debug("获取注册表中的注册信息");
 		

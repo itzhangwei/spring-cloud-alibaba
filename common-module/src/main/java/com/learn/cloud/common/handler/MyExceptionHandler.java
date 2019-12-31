@@ -40,9 +40,11 @@ public class MyExceptionHandler {
 			return ApiResult.error((BaseException) e);
 		} else {
 			BaseException sysError = Errors.SYS_ERROR;
-			log.error(e.getMessage());
+			log.error("错误信息：",e);
 			sysError.setDetailMsg(JSON.toJSONString(e));
-			return ApiResult.error(sysError);
+			ApiResult error = ApiResult.error(sysError);
+			error.setData(e);
+			return error;
 		}
 	}
 }

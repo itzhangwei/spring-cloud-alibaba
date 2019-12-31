@@ -43,7 +43,7 @@ public class BaseException extends RuntimeException {
 		super(message);
 		this.message=message;
 		
-		this.message=errorType;
+		this.errorType=errorType;
 	}
 	
 	

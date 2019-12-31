@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExceptionUtil {
 	
-	public static ApiResult handleException(BlockException ex) {
+	public ApiResult handleException(BlockException ex) {
 		log.info("服务限流了啊，exception：{}", ex == null ? "null" : ex.getMessage());
 		
 		return ApiResult.error("服务限流了啊");
