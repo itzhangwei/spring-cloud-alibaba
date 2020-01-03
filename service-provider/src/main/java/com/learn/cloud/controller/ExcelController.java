@@ -1,11 +1,13 @@
 package com.learn.cloud.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.learn.cloud.common.dao.ExcelDao;
 import com.learn.cloud.common.entity.Customer;
 import com.learn.cloud.common.listener.ExcelDataListener;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @author zhang
@@ -20,10 +22,10 @@ public class ExcelController {
 	
 	
 	
-	@GetMapping("/import")
-	public String importExcel(){
-		String filePath = "/Users/zack.zhang/Desktop/学习/learnImport.xlsx";
-		EasyExcel.read(filePath, Customer.class, new ExcelDataListener()).sheet().doRead();
+	@PostMapping("/import")
+	public String importExcel(MultipartFile file) throws IOException {
+//		String filePath = "/Users/zack.zhang/Desktop/学习/learnImport.xlsx";
+		EasyExcel.read(file.getInputStream(), Customer.class, new ExcelDataListener()).sheet().doRead();
 		return "success";
 	}
 	
