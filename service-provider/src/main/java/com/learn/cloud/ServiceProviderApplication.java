@@ -1,5 +1,6 @@
 package com.learn.cloud;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @description 启动类
  * @date 2019/12/20 5:27 下午
  */
-@SpringBootApplication(scanBasePackages = "com.learn.cloud.*")
+@SpringBootApplication(scanBasePackages = {"com.learn.cloud.*"})
+@MapperScan(basePackages = {"com.learn.cloud.*"})
 public class ServiceProviderApplication {
 	
 	public static void main(String[] args) {
