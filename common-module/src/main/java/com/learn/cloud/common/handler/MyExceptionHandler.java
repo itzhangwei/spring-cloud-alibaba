@@ -1,6 +1,5 @@
 package com.learn.cloud.common.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.learn.cloud.common.message.BaseException;
 import com.learn.cloud.common.message.Errors;
 import com.learn.cloud.common.response.ApiResult;
@@ -8,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @author zhang
@@ -40,10 +42,12 @@ public class MyExceptionHandler {
 			return ApiResult.error((BaseException) e);
 		} else {
 			BaseException sysError = Errors.SYS_ERROR;
-			log.error("错误信息：",e);
-			sysError.setDetailMsg(JSON.toJSONString(e));
+			log.error("错误信息：{}", e);
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			sysError.setDetailMsg(sw.toString());
 			ApiResult error = ApiResult.error(sysError);
-			error.setData(e);
 			return error;
 		}
 	}
