@@ -50,9 +50,9 @@ public class ClassScanner implements ResourceLoaderAware {
 	 * @author zhangwei
 	 * @createTime 2020/1/3 11:27 上午
 	 */
-	public Set<Class> doScan(String basePackage) {
+	public Set<Class<?>> doScan(String basePackage) {
 		
-		Set<Class> classes = new HashSet<>();
+		Set<Class<?>> classes = new HashSet<>();
 		String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
 				+ ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage))
 				+ "/**/*.class";
@@ -79,10 +79,10 @@ public class ClassScanner implements ResourceLoaderAware {
 	}
 	
 	
-	public static Set<Class> scan(List<String> basePackages) {
+	public static Set<Class<?>> scan(List<String> basePackages) {
 		ClassScanner cs = new ClassScanner();
 		
-		Set<Class> classes = new HashSet<>();
+		Set<Class<?>> classes = new HashSet<>();
 		for (String s : basePackages) {
 			classes.addAll(cs.doScan(s));
 		}
