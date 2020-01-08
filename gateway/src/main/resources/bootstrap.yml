@@ -1,0 +1,27 @@
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      config:
+        group: spring-cloud
+        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1
+        file-extension: yaml
+        server-addr: @local-ip@:8848
+        shared-dataids: share-config.yaml #引用一个公共配置文件，需要在默认 DEFAULT_GROUP 组下否则不行，自定义group可以使用ext方式
+        refreshable-dataids: share-config.yaml
+#        ext-config:
+#          - dataId: share-config.yaml
+#            group: spring-cloud
+#            refresh: true
+      discovery:
+        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1
+        server-addr: @local-ip@:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true #根据serviceId找到服务调用
+          lower-case-service-id: true #小写
+server:
+  port: 8840

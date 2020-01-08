@@ -1,0 +1,11 @@
+${AnsiColor.GREEN}
+application.name: ${spring.application.name}
+${AnsiColor.YELLOW}
+springboot.version: ${spring-boot.version}
+${AnsiColor.RED}
+
+                __   __  ____  ___  _    _  __   _  _
+               / _) (  )(_  _)(  _)( \/\/ )(  ) ( \/ )
+              ( (/\ /__\  )(   ) _) \    / /__\  \  /
+               \__/(_)(_)(__) (___)  \/\/ (_)(_)(__/
+
