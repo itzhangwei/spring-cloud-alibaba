@@ -1,0 +1,27 @@
+
+spring:
+  application:
+    name: sleuth-zipkin
+  cloud:
+    nacos:
+      config:
+        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #不写默认是public空间，写的是ID,不是name
+        file-extension: yaml #默认 properties，支持 properties，yaml
+        server-addr: @local-ip@:8848
+        group: spring-cloud
+      discovery:
+        server-addr: @local-ip@:8848
+        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #同上
+  main:
+#    # 让应用以非web服务方式启动 server.port配置将会失效,放在配置中心里面读取就晚了
+    web-application-type: none
+#server:
+#  compression:
+#    # 是否开启压缩 默认false
+#    enabled: true
+#    mime-types: application/json
+##  port: 8400
+#armeria:
+#  ports:
+#    - port: 8400
+#      protocol: HTTP
