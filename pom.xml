@@ -13,6 +13,8 @@
     <modules>
         <module>service-provider</module>
         <module>common-module</module>
+        <module>gateway</module>
+        <module>sleuth</module>
     </modules>
 
     <properties>
@@ -46,6 +48,7 @@
         <druid-version>1.1.21</druid-version>
         <easyexcel-version>2.1.4</easyexcel-version>
         <mysql-version>5.1.47</mysql-version>
+        <zipkin-server-version>2.12.9</zipkin-server-version>
 
     </properties>
 
@@ -126,6 +129,20 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.zipkin.java/zipkin-server -->
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-server</artifactId>
+                <version>${zipkin-server-version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.zipkin.java/zipkin-autoconfigure-ui -->
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-autoconfigure-ui</artifactId>
+                <version>${zipkin-server-version}</version>
             </dependency>
 
         </dependencies>

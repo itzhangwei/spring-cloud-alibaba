@@ -11,17 +11,40 @@ spring:
         server-addr: @local-ip@:8848
         group: spring-cloud
         namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #写namespace的ID，不屑默认是public空间
+        shared-dataids: share-config.yaml #引用配置文件，需要咋同一个group下面
       discovery:
         server-addr: @local-ip@:8848
         namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #同上
     sentinel:
       transport:
         port: 8719 #端口配置会在应用对应的机器上启动一个 Http Server，该 Server 会与 Sentinel 控制台做交互
-        dashboard: @local-ip@:8080 # sentinel 控制后台端口
+        dashboard: http://@local-ip@:8080 # sentinel 控制后台端口
       eager: true #是否提前加载，懒加载，
+      datasource:
+        ds1:
+          nacos:
+            server-addr: @local-ip@:8848
+            group-id:  spring-cloud
+            namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1
+            data-id: service-provider-flow-rules
+            data-type: json
+            rule-type: flow
+        ds2:
+          nacos:
+            server-addr: @local-ip@:8848
+            group-id:  spring-cloud
+            namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1
+            data-id: service-provider-degrade-rules
+            data-type: json
+            rule-type: degrade
+  zipkin:
+    compression:
+      enabled: true
+    base-url: http://@local-ip@:8400/
 server:
   port: 8820
 
 logging:
   level:
     com.learn.cloud.*: debug
+    com.alibaba.nacos.client.* : error
