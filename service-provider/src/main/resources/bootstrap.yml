@@ -10,8 +10,8 @@ spring:
         file-extension: yaml #目前只支持 properties 和 yaml 类型, 默认 properties
         server-addr: @local-ip@:8848
         group: spring-cloud
-        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #写namespace的ID，不屑默认是public空间
-        shared-dataids: share-config.yaml #引用配置文件，需要咋同一个group下面
+        namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #写namespace的ID，不写默认是public空间
+        shared-dataids: share-config.yaml #引用配置文件，需要在同一个group下面
       discovery:
         server-addr: @local-ip@:8848
         namespace: f51b71eb-b1a6-4225-a9fb-670649b6ffa1 #同上
